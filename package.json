@@ -4,17 +4,19 @@
   "description": "my photo gelarry",
   "main": "index.js",
   "scripts": {
-    "build" : "tsc", 
-    "start": "node dist/index.js", 
-    "dev" : "nodemon src/index.ts" 
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts"
   },
   "author": "virendra patel",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.8",
+    "@types/mongoose": "^5.7.36",
     "@types/node": "^14.14.5"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.10.11"
   }
 }
