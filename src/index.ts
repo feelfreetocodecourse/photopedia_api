@@ -3,8 +3,8 @@ import { createConnection } from "./db/connection";
 import { userRouter } from "./routers/user-router";
 
 const app = express();
-app.use(express.urlencoded())
-app.use(express.json())
+app.use(express.urlencoded());
+app.use(express.json());
 
 // creating connection
 createConnection();
@@ -20,3 +20,4 @@ apiRouter.get("/", (req, res) => {
   res.json({ message: "API is working.." });
 });
 apiRouter.use("/users", userRouter);
+
