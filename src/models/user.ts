@@ -1,4 +1,5 @@
 import mongoose, { mongo } from "mongoose";
+import { UserType } from "../types/user-type";
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -15,6 +16,6 @@ const userSchema = new Schema(
   }
 );
 
-const UserModel = mongoose.model("User", userSchema);
+const UserModel = mongoose.model<UserType>("User", userSchema);
 
 export {UserModel}
