@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import joi, { valid } from "joi";
-import fs from "fs";
 import { PictureType } from "../types/picture-type";
 import { PictureModel, validatePictureBody } from "../models/picture";
 export async function getPictures(
