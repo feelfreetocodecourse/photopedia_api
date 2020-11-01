@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
 import { createConnection } from "./db/connection";
+import { errorHandler } from "./middlewares/error-middleware";
+import { pictureRouter } from "./routers/picture-router";
 import { userRouter } from "./routers/user-router";
 
 const app = express();
@@ -20,4 +22,6 @@ apiRouter.get("/", (req, res) => {
   res.json({ message: "API is working.." });
 });
 apiRouter.use("/users", userRouter);
+apiRouter.use("/pictures" , pictureRouter)
 
+app.use(errorHandler)
