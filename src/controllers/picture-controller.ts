@@ -1,38 +1,29 @@
 import { NextFunction, Request, Response } from "express";
-import joi from "joi";
-export function getPictures(
+import joi, { valid } from "joi";
+import fs from "fs";
+import { PictureType } from "../types/picture-type";
+import { PictureModel, validatePictureBody } from "../models/picture";
+export async function getPictures(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
-  response.json({ message: "All Pictures" });
+    const pictures = await PictureModel.find().select('-highQualityImage')
+  response.json({ pictures });
 }
 
-// //  title:
-// description
-// price:
-// discount:
-// tags
+
 export async function createPicture(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
   const { body } = request;
-  const schema = joi.object({
-    title: joi.string().required().min(5),
-    description: joi.string(),
-    price: joi.number().required().min(1),
-    discount: joi.number(),
-    tags: joi.array().items(joi.string()),
-  });
+  const {error , value }  = validatePictureBody(body, request.files);
 
-  const { value, error } = schema.validate(body);
-
-  if (error) {
-    return next(new Error(error.details[0].message));
+  if(error){
+      return next(new Error(error))
   }
-    console.log(value);
-    console.log(request.files);
-  response.json({ message: "Create picures" });
+  const picture = await new PictureModel(value).save();
+  response.json({ message: "Picture Created", picture });
 }
