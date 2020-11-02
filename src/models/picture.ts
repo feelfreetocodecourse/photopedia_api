@@ -3,6 +3,8 @@ import { PictureType } from "../types/picture-type";
 const { Schema } = mongoose;
 import fs from "fs";
 import joi, { valid } from "joi";
+const { HOST } = process.env 
+
 
 const pictureSchema = new Schema(
   {
@@ -22,7 +24,7 @@ const pictureSchema = new Schema(
     
     toJSON : {
       transform : ( doc , picture )=>{
-        picture.thumbnail = `http://localhost:3000/api/file/thumbnail/${picture._id}`
+        picture.thumbnail = `${HOST}/api/file/thumbnail/${picture._id}`
         return picture
       }
     }

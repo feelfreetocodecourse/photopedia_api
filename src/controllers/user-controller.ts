@@ -5,7 +5,7 @@ import passwordHash from "password-hash";
 import { UserType } from "../types/user-type";
 import jwt from "jsonwebtoken";
 import { TokenPayload } from "../types/token-payload";
-const SECRET_KEY = "photopedia@123";
+const { JWT_SECRET } = process.env 
 
 export function getUsers(request: Request, response: Response) {
   response.json({ message: "All Users" });
@@ -110,7 +110,7 @@ export async function loginUser(
       _id: user._id,
       isAdmin: user.isAdmin,
     };
-    const token = jwt.sign(payload, SECRET_KEY);
+    const token = jwt.sign(payload, <string>JWT_SECRET);
     return response.json({
       message: "Login Success ",
       token: token,

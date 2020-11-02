@@ -25,3 +25,7 @@ export const pictureUploadMiddleware = upload.fields([
 ]);
 
 
+export const thumbnailUpdateMiddleware = upload.single('thumbnail')
+export const highQualityImageUpdateMiddleware = upload.single('highQualityImage')
+
+

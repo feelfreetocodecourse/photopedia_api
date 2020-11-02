@@ -1,3 +1,5 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import express, { Request, Response } from "express";
 import { thumbnailDownload } from "./controllers/file-download-controller";
 import { createConnection } from "./db/connection";
@@ -10,11 +12,15 @@ const app = express();
 app.use(express.urlencoded());
 app.use(express.json());
 
+console.log("PORT" , process.env.PORT);
+const {PORT , JWT_SECRET , HOST } = process.env 
+
 // creating connection
 createConnection();
+console.log(JWT_SECRET , HOST);
 
-app.listen(3000, () => {
-  console.log("App is listenin......");
+app.listen( PORT || 3000 , () => {
+  console.log("App is listening On " , (PORT || 3000));
 });
 
 const apiRouter = express.Router();

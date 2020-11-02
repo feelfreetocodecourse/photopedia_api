@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { TokenPayload } from "../types/token-payload";
+const { JWT_SECRET } = process.env 
 
-const SECRET_KEY = "photopedia@123";
 export function userAuthMiddleware(
   request: Request,
   response: Response,
@@ -19,7 +19,7 @@ export function userAuthMiddleware(
   }
 
   try {
-    const payload = <any>jwt.verify(token, SECRET_KEY);
+    const payload = <any>jwt.verify(token, <string>JWT_SECRET);
     (<any>request).payload = payload;
   } catch (error) {
     response.status(401)
@@ -44,7 +44,7 @@ export function adminAuthMiddleware(
   }
 
   try {
-    const payload = <any>jwt.verify(token, SECRET_KEY);
+    const payload = <any>jwt.verify(token, <string>JWT_SECRET);
     (<any>request).payload = payload;
     const isAdmin = (payload as TokenPayload).isAdmin
 
