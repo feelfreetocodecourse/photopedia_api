@@ -1,24 +1,31 @@
 import mongoose from "mongoose";
 import { PictureType } from "../types/picture-type";
 const { Schema } = mongoose;
-import fs from 'fs'
+import fs from "fs";
 import joi, { valid } from "joi";
 
 const pictureSchema = new Schema(
   {
     title: { type: String, required: true, minlength: 4 },
-    description : { type: String, required: false },
-    thumbnail : { type: String , required: true },
-    highQualityImage : { type: String, required: true },
-    price: { type: Number , required: true, minlength: 1 },
-    discount: { type: Number , required: false, default : 0 },
-    tags : { type : [String] }
+    description: { type: String, required: false },
+    thumbnail: { type: String, required: true },
+    highQualityImage: { type: String, required: true },
+    price: { type: Number, required: true, minlength: 1 },
+    discount: { type: Number, required: false, default: 0 },
+    tags: { type: [String] },
   },
   {
     timestamps: {
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    
+    toJSON : {
+      transform : ( doc , picture )=>{
+        picture.thumbnail = `http://localhost:3000/api/file/thumbnail/${picture._id}`
+        return picture
+      }
+    }
   }
 );
 
@@ -43,8 +50,8 @@ export function validatePictureBody(body: any, files: any) {
   const { value, error } = schema.validate(body);
 
   if (!files) {
-    data.error = "thumbnail and high Quality Images required"
-    return data
+    data.error = "thumbnail and high Quality Images required";
+    return data;
   }
 
   const thumbnailImageArray = <Express.Multer.File[]>files["thumbnail"];
@@ -60,37 +67,36 @@ export function validatePictureBody(body: any, files: any) {
 
   if (highQualityImage && !thumbnail) {
     deleteFile(highQualityImage.path);
-    data.error = "thumbnail required"
-    return data
+    data.error = "thumbnail required";
+    return data;
   }
 
   if (!highQualityImage && thumbnail) {
     deleteFile(thumbnail.path);
-    data.error = "high Quanlity Image required"
-    return data
-   
+    data.error = "high Quanlity Image required";
+    return data;
   }
   if (!highQualityImage && !thumbnail) {
-    data.error = "high Quanlity Image required"
-    return data
+    data.error = "high Quanlity Image required";
+    return data;
   }
 
   if (error) {
     deleteFile(thumbnail.path);
     deleteFile(highQualityImage.path);
-    data.error = error.details[0].message
-    return data
+    data.error = error.details[0].message;
+    return data;
   }
 
-   //    value
-   const _picture: PictureType = {
+  //    value
+  const _picture: PictureType = {
     ...value,
     highQualityImage: highQualityImage.path,
     thumbnail: thumbnail.path,
   };
 
-  data.value = _picture
-  return data
+  data.value = _picture;
+  return data;
 }
 
-export {PictureModel}
+export { PictureModel };

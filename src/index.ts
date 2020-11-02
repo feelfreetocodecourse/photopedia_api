@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
+import { thumbnailDownload } from "./controllers/file-download-controller";
 import { createConnection } from "./db/connection";
 import { errorHandler } from "./middlewares/error-middleware";
+import { fileDownloadRouter } from "./routers/file-download-router";
 import { pictureRouter } from "./routers/picture-router";
 import { userRouter } from "./routers/user-router";
 
@@ -23,6 +25,7 @@ apiRouter.get("/", (req, res) => {
 });
 apiRouter.use("/users", userRouter);
 apiRouter.use("/pictures" , pictureRouter)
+apiRouter.use("/file" , fileDownloadRouter)
 
 app.use(errorHandler)
 
