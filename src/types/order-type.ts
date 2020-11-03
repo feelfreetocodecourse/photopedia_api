@@ -3,7 +3,7 @@ import { PaymentType } from "./payment-type";
 import { PictureType } from "./picture-type";
 import { UserType } from "./user-type";
 
-export interface OrdeType extends mongoose.Document {
+export interface OrderType extends mongoose.Document {
   user: UserType;
   payment: PaymentType;
   picture: PictureType;

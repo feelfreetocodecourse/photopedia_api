@@ -23,8 +23,9 @@ const pictureSchema = new Schema(
     },
     
     toJSON : {
-      transform : ( doc , picture )=>{
+      transform : ( doc , picture)=>{
         picture.thumbnail = `${HOST}/api/file/thumbnail/${picture._id}`
+        
         return picture
       }
     }

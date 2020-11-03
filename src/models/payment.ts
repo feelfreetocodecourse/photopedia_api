@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const paymentSchema = new Schema(
   {
-    payment_id: { type: String, required: false , unique : true  },
+    payment_id: { type: String, required: false , unique : false  },
     order_id: { type: String, required: true , unique : true  },
     payment_status : { type : String , default : "Failed"}
   },

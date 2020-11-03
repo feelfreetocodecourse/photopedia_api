@@ -1,5 +1,5 @@
 import mongoose, { mongo } from "mongoose";
-import { OrdeType } from "../types/order-type";
+import { OrderType } from "../types/order-type";
 import { UserType } from "../types/user-type";
 const { Schema } = mongoose;
 
@@ -18,6 +18,6 @@ const orderSchema = new Schema(
   }
 );
 
-const OrderModel = mongoose.model<OrdeType>("Order", orderSchema);
+const OrderModel = mongoose.model<OrderType>("Order", orderSchema);
 
 export {OrderModel}

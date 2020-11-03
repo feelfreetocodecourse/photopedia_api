@@ -5,6 +5,8 @@ import { thumbnailDownload } from "./controllers/file-download-controller";
 import { createConnection } from "./db/connection";
 import { errorHandler } from "./middlewares/error-middleware";
 import { fileDownloadRouter } from "./routers/file-download-router";
+import { orderRouter } from './routers/order-router';
+import { paymentRouter } from './routers/payment-router';
 import { pictureRouter } from "./routers/picture-router";
 import { userRouter } from "./routers/user-router";
 
@@ -31,6 +33,8 @@ apiRouter.get("/", (req, res) => {
 });
 apiRouter.use("/users", userRouter);
 apiRouter.use("/pictures" , pictureRouter)
+apiRouter.use("/orders" , orderRouter)
+apiRouter.use('/payments' , paymentRouter)
 apiRouter.use("/file" , fileDownloadRouter)
 
 app.use(errorHandler)

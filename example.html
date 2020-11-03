@@ -19,11 +19,13 @@ var options = {
     "name": "Feel Free To Code",
     "description": "Test Payment",
     "image": "https://example.com/your_logo",
-    "order_id": "order_FwaaUuTsZHtBeo", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "order_id": "order_FwlIqCEGI509hH", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": function (response){
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature)
+        console.log({
+            payment_id : response.razorpay_payment_id , 
+            order_id : response.razorpay_order_id , 
+            razorpay_signature : response.razorpay_signature
+        });
     },
     "notes": {
         "address": "Razorpay Corporate Office"
