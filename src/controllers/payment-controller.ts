@@ -11,6 +11,7 @@ import { PaymentModel } from "../models/payment";
 import { OrderModel } from "../models/order";
 import { OrderType } from "../types/order-type";
 import Joi from  'joi'
+import {createHmac} from 'crypto'
 const { KEY_ID, KEY_SECRET } = process.env;
 var instance = new Razorpay({
   key_id: KEY_ID,
@@ -34,5 +35,18 @@ export async function verifyPayment(
         response.status(400)
         return next(new Error(error.details[0].message))
     }
-    response.json({message : "Verify Payment"})
+
+    const {order_id , payment_id ,  razorpay_signature} = value
+
+    const generatedHex = createHmac("SHA256" , <string>KEY_SECRET )
+    .update(order_id + "|" + payment_id)
+    .digest("hex")
+
+    if(generatedHex == razorpay_signature){
+        return response.json({message : "Success   Payment"})
+    }
+
+    response.json({message : "Failed.. Payment"})
+
+    
 }
