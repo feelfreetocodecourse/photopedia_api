@@ -10,6 +10,7 @@ import { PaymentType } from "../types/payment-type";
 import { PaymentModel } from "../models/payment";
 import { OrderModel } from "../models/order";
 import { OrderType } from "../types/order-type";
+import Joi from  'joi'
 const { KEY_ID, KEY_SECRET } = process.env;
 var instance = new Razorpay({
   key_id: KEY_ID,
@@ -21,5 +22,17 @@ export async function verifyPayment(
   response: Response,
   next: NextFunction
 ) {
+    const body = request.body
+    const schema = Joi.object({
+        order_id : Joi.string().required(), 
+        payment_id : Joi.string().required(), 
+        razorpay_signature : Joi.string().required(), 
+    })
+
+    const {error , value} = schema.validate(body)
+    if(error){
+        response.status(400)
+        return next(new Error(error.details[0].message))
+    }
     response.json({message : "Verify Payment"})
 }
