@@ -24,18 +24,25 @@ export async function createOrder(
   const pictureId = request.body.picture;
   const payload = <TokenPayload>(<any>request).payload;
 
-  const picture = <PictureType>await PictureModel.findById(pictureId).select("-highQualityImage");
+  const picture = <PictureType>(
+    await PictureModel.findById(pictureId).select("-highQualityImage")
+  );
   console.log({ picture });
   console.log({ user: payload._id });
   const user = <UserType>await UserModel.findById(payload._id);
+
+  console.log({ user });
 
   const mrp = +picture.price;
   const discount = +picture.discount;
   const price = mrp - mrp * (discount / 100);
   //   creating order id
-  const razorPayOrderObject = <RazorPayOrderResponse>(
-    await instance.orders.create({
-      amount: price * 100,
+
+  let razorPayOrderObject: RazorPayOrderResponse;
+
+  try {
+    razorPayOrderObject = <RazorPayOrderResponse>await instance.orders.create({
+      amount: Math.floor(price * 100),
       currency: "INR",
       receipt: `feelfreetocode_order${Date.now()}`,
       payment_capture: true,
@@ -43,25 +50,29 @@ export async function createOrder(
         name: user.name,
         email: user.email,
       },
-    })
-  );
+    });
+  } catch (error) {
+    console.log(error);
+    return response.send(error.message)
+    
+  }
 
   console.log(razorPayOrderObject);
-  
+
   const paymentObject = await new PaymentModel({
     order_id: razorPayOrderObject.id,
-  }).save()
+  }).save();
 
-
-  const _order  = {
-      payment : paymentObject , 
-      user : user , 
-      picture : picture , 
-      price : price
-  }
-  const order = await new OrderModel(_order).save()
+  const _order = {
+    payment: paymentObject,
+    user: user,
+    picture: picture,
+    price: price,
+  };
+  const order = await new OrderModel(_order).save();
 
   response.json({
-    payment : paymentObject , order 
+    payment: paymentObject,
+    order,
   });
 }
