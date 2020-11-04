@@ -12,6 +12,7 @@ import { OrderModel } from "../models/order";
 import { OrderType } from "../types/order-type";
 import Joi from  'joi'
 import {createHmac} from 'crypto'
+import { pathToFileURL } from "url";
 const { KEY_ID, KEY_SECRET } = process.env;
 var instance = new Razorpay({
   key_id: KEY_ID,
@@ -38,15 +39,41 @@ export async function verifyPayment(
 
     const {order_id , payment_id ,  razorpay_signature} = value
 
+    let payment = <PaymentType>await  PaymentModel.findOne({order_id : order_id})
+    
+
     const generatedHex = createHmac("SHA256" , <string>KEY_SECRET )
     .update(order_id + "|" + payment_id)
     .digest("hex")
 
+
+    let message = "Payment Sucesss"
+
+    const populateArray = [
+        {path : 'payment'}, 
+        {path : 'user' , select : "-password"}
+    ]
+
     if(generatedHex == razorpay_signature){
-        return response.json({message : "Success   Payment"})
+        payment.payment_status = "Success"
+        populateArray.push({ path : "picture" })
+    }else{
+        payment.payment_status = "Failed"
+        message = "Payment Failed."
+        populateArray.push({ path : "picture" , select : '-highQualityImage' })
+        response.status(400)
     }
 
-    response.json({message : "Failed.. Payment"})
+    payment = await payment.save()
+    let order = <OrderType>await OrderModel
+                        .findOne({'payment' : payment})
+                        .populate(populateArray)
 
+    response.json({
+        message : message , 
+        order
+    })
+
+    
     
 }
