@@ -53,8 +53,8 @@ export async function createOrder(
     });
   } catch (error) {
     console.log(error);
-    return response.send(error.message)
-    
+    response.status(500)
+    return response.send("Razorpay Error")
   }
 
   console.log(razorPayOrderObject);
