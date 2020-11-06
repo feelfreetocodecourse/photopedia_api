@@ -6,6 +6,6 @@ import { userAuthMiddleware } from "../middlewares/auth-middlewares";
 const fileDownloadRouter = express.Router();
 
 fileDownloadRouter.get("/thumbnail/:id" , thumbnailDownload )
-fileDownloadRouter.get("/high_quality_image/:id" , userAuthMiddleware ,  highQualityImageDownload )
+fileDownloadRouter.get("/highqualityimage/:imageKey" , highQualityImageDownload )
 
 export { fileDownloadRouter };

@@ -4,9 +4,12 @@ import { OrderModel } from "../models/order";
 import { PaymentModel } from "../models/payment";
 import { PictureModel } from "../models/picture";
 import { UserModel } from "../models/user";
+import { OrderType } from "../types/order-type";
 import { PictureType } from "../types/picture-type";
 import { TokenPayload } from "../types/token-payload";
 
+const short = require('short-uuid');
+const translator = short();
 export async function thumbnailDownload(
   request: Request,
   response: Response,
@@ -24,32 +27,24 @@ export async function highQualityImageDownload(
   response: Response,
   next: NextFunction
 ) {
-  console.log(request.params.id);
-  const payload = <TokenPayload>(<any>request).payload;
-  const user_id = payload._id;
-  const id = request.params.id;
-  const pic = <PictureType>await PictureModel.findOne({ _id: id });
+  console.log(request.params.imageKey);
+  
+  
+  const imageKey = request.params.imageKey;
+  const order = <OrderType>await OrderModel.findOne({ urlKey: imageKey }).populate('picture')
 
-  let orders = await OrderModel.find({ 
-      user: new UserModel({ _id: user_id }), 
-      picture : pic
-    }).populate({
-        path : 'payment', 
-        match : {
-            payment_status : "Success"
-        }
-    })
+  if(order){
+    const path = <string>order.picture.highQualityImage
 
-    orders = orders.filter(order=>order.payment!=null)
-    if(orders.length > 0){
-        const path = pic.highQualityImage;
-        return response.download(<string>path);
-    }
-
-    response.status(401)
-    return next(new Error("You Cant Access this resource"))
+    order.urlKey = translator.new()
+    await order.save()
+    response.download(path)
+    return 
+  }
 
 
+  response.status(404)
+  return next(new Error("Link Expired"))
 
   
 }

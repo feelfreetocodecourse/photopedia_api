@@ -10,4 +10,5 @@ export interface OrderType extends mongoose.Document {
   price: Number;
   createdAt: String;
   updatedAt: String;
+  urlKey: String;
 }
