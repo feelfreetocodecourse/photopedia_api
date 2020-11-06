@@ -11,4 +11,5 @@ export interface OrderType extends mongoose.Document {
   createdAt: String;
   updatedAt: String;
   urlKey: String;
+  image ?: String;
 }

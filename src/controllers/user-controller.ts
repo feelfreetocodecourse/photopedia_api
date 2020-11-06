@@ -14,13 +14,24 @@ export function getUsers(request: Request, response: Response) {
 export async function getUserOrders(request: Request, response: Response) {
   const payload = <TokenPayload>(<any>request).payload;
   const _id = payload._id;
-  const orders = await OrderModel
+  let orders = await OrderModel
   .find({
     user: new UserModel({ _id: _id }),
   }).populate([
     { path : 'picture'} , 
     {path : 'payment'}, 
   ])
+
+  orders = orders.map((order)=>{
+    order = order.toJSON()
+    console.log(order.image);
+    
+    if (order.payment.payment_status === "Failed") {
+      delete order.image
+    }
+    return order
+  })
+
   response.json({ orders });
 }
 
