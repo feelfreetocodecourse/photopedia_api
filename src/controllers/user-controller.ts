@@ -5,10 +5,23 @@ import passwordHash from "password-hash";
 import { UserType } from "../types/user-type";
 import jwt from "jsonwebtoken";
 import { TokenPayload } from "../types/token-payload";
-const { JWT_SECRET } = process.env 
+import { OrderModel } from "../models/order";
+const { JWT_SECRET } = process.env;
 
 export function getUsers(request: Request, response: Response) {
   response.json({ message: "All Users" });
+}
+export async function getUserOrders(request: Request, response: Response) {
+  const payload = <TokenPayload>(<any>request).payload;
+  const _id = payload._id;
+  const orders = await OrderModel
+  .find({
+    user: new UserModel({ _id: _id }),
+  }).populate([
+    { path : 'picture'} , 
+    {path : 'payment'}, 
+  ])
+  response.json({ orders });
 }
 
 export async function updateProfile(
@@ -91,14 +104,14 @@ export async function loginUser(
   const { value, error } = userValidationSchema.validate(body);
 
   if (error) {
-    response.status(400)
-    return next(new Error(error.details[0].message))
+    response.status(400);
+    return next(new Error(error.details[0].message));
   }
 
   const { email, password } = value;
   const user: UserType = <UserType>await UserModel.findOne({ email: email });
   if (!user) {
-    response.status(400)
+    response.status(400);
     return next(new Error("email or password incorrect"));
   }
 
@@ -117,6 +130,6 @@ export async function loginUser(
     });
   }
 
-  response.status(400)
+  response.status(400);
   return next("email or password incorrect");
 }
