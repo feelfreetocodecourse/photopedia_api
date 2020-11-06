@@ -9,8 +9,10 @@ import { orderRouter } from './routers/order-router';
 import { paymentRouter } from './routers/payment-router';
 import { pictureRouter } from "./routers/picture-router";
 import { userRouter } from "./routers/user-router";
+import morgan from 'morgan'
 
 const app = express();
+app.use(morgan("dev"))
 app.use(express.urlencoded());
 app.use(express.json());
 
