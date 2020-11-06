@@ -31,7 +31,16 @@ export async function createOrder(
   console.log({ user: payload._id });
   const user = <UserType>await UserModel.findById(payload._id);
 
-  console.log({ user });
+  const count =await OrderModel.find({
+    user : user, 
+    picture : picture, 
+    orderStatus : "Success"
+  }).countDocuments()
+
+  if(count>0){
+    response.status(400)
+    return next(new Error("user already paid for this picture")) 
+  }
 
   const mrp = +picture.price;
   const discount = +picture.discount;

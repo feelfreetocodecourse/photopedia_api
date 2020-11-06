@@ -14,6 +14,12 @@ const userSchema = new Schema(
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    toJSON : {
+      transform : (doc , user)=>{
+        delete user.password
+        return user
+      }
+    }
   }
 );
 

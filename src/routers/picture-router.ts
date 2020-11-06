@@ -5,7 +5,8 @@ import {
   deletePicture,
   updatePicture,
   updateThumbnail,
-  updateHighQualityImage
+  updateHighQualityImage, 
+  getPicture
 } from "../controllers/picture-controller";
 import { adminAuthMiddleware } from "../middlewares/auth-middlewares";
 import {
@@ -16,6 +17,7 @@ import {
 // /api/pictures
 const pictureRouter = express.Router();
 pictureRouter.get("/", getPictures);
+pictureRouter.get("/:id", getPicture);
 pictureRouter.post(
   "/",
   adminAuthMiddleware,

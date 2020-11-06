@@ -8,8 +8,11 @@ import { TokenPayload } from "../types/token-payload";
 import { OrderModel } from "../models/order";
 const { JWT_SECRET } = process.env;
 
-export function getUsers(request: Request, response: Response) {
-  response.json({ message: "All Users" });
+export async function getUsers(request: Request, response: Response) {
+  const users = await UserModel.find()
+  response.json({
+    users  
+  })
 }
 export async function getUserOrders(request: Request, response: Response) {
   const payload = <TokenPayload>(<any>request).payload;

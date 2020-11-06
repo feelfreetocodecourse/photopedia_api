@@ -1,15 +1,33 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response} from "express";
 import joi, { valid } from "joi";
 import { PictureType } from "../types/picture-type";
 import fs from 'fs'
 import { PictureModel, validatePictureBody } from "../models/picture";
+import { isValidObjectId } from "mongoose";
 export async function getPictures(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
-  const pictures = await PictureModel.find().select("-highQualityImage");
+  const pictures = await PictureModel.find()
   response.json({ pictures });
+}
+export async function getPicture(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  const { id } = request.params
+  if(!isValidObjectId(id)){
+    response.status(400)
+    return next(new Error("picture Id is not valid"))
+  }
+  const picture = await PictureModel.findOne({_id : id })
+  if(!picture){
+    response.status(404)
+    return next(new Error("Not Found"))
+  }
+  response.json({ picture });
 }
 
 export async function deletePicture(
