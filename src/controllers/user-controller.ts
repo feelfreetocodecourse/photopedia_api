@@ -9,16 +9,24 @@ import { OrderModel } from "../models/order";
 const { JWT_SECRET } = process.env;
 
 export async function getUsers(request: Request, response: Response) {
-  const pagesize = 2;
-  const page : number  = 
-      (request.query.page) 
-      ? Number.parseInt(request.query.page.toString()) : 1
-  const skip = (page-1)*pagesize
-  
-  const users = await UserModel.find().skip(skip).limit(pagesize)
+  const pagesize = request.query.pagesize
+    ? Number.parseInt(request.query.pagesize.toString())
+    : 2;
+  const page: number = request.query.page
+    ? Number.parseInt(request.query.page.toString())
+    : 1;
+  const skip = (page - 1) * pagesize;
+
+  const users = await UserModel.find().skip(skip).limit(pagesize);
+  const count = users.length;
+  const totalUsers = await UserModel.find().countDocuments();
   response.json({
-    users  
-  })
+    users,
+    count,
+    page,
+    pagesize,
+    totalUsers,
+  });
 }
 export async function getUserOrders(request: Request, response: Response) {
   const payload = <TokenPayload>(<any>request).payload;
@@ -26,12 +34,12 @@ export async function getUserOrders(request: Request, response: Response) {
 
   const { status } = request.query;
 
-  const filterObject : any  = {
+  const filterObject: any = {
     user: new UserModel({ _id: _id }),
   };
 
   if (status) {
-    filterObject.orderStatus = new RegExp(<string>status , "i")
+    filterObject.orderStatus = new RegExp(<string>status, "i");
   }
 
   let orders = await OrderModel.find(filterObject).populate([
