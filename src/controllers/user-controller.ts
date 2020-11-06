@@ -9,7 +9,13 @@ import { OrderModel } from "../models/order";
 const { JWT_SECRET } = process.env;
 
 export async function getUsers(request: Request, response: Response) {
-  const users = await UserModel.find()
+  const pagesize = 2;
+  const page : number  = 
+      (request.query.page) 
+      ? Number.parseInt(request.query.page.toString()) : 1
+  const skip = (page-1)*pagesize
+  
+  const users = await UserModel.find().skip(skip).limit(pagesize)
   response.json({
     users  
   })
