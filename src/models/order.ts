@@ -11,6 +11,7 @@ const orderSchema = new Schema(
     payment: { type: Schema.Types.ObjectId, required: true, ref:'Payment' },
     picture : {type: Schema.Types.ObjectId, required: true, ref : 'Picture' },
     price: { type: Number,  required: true},
+    orderStatus: { type: String, enum : ['Success' , "Failed"] ,   required: true , default : "Failed"},
     urlKey: { type: String,  required: true , unique : true  ,  default : translator.new },
   },
   {

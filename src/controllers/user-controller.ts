@@ -14,23 +14,31 @@ export function getUsers(request: Request, response: Response) {
 export async function getUserOrders(request: Request, response: Response) {
   const payload = <TokenPayload>(<any>request).payload;
   const _id = payload._id;
-  let orders = await OrderModel
-  .find({
-    user: new UserModel({ _id: _id }),
-  }).populate([
-    { path : 'picture'} , 
-    {path : 'payment'}, 
-  ])
 
-  orders = orders.map((order)=>{
-    order = order.toJSON()
+  const { status } = request.query;
+
+  const filterObject : any  = {
+    user: new UserModel({ _id: _id }),
+  };
+
+  if (status) {
+    filterObject.orderStatus = new RegExp(<string>status , "i")
+  }
+
+  let orders = await OrderModel.find(filterObject).populate([
+    { path: "picture" },
+    { path: "payment" },
+  ]);
+
+  orders = orders.map((order) => {
+    order = order.toJSON();
     console.log(order.image);
-    
+
     if (order.payment.payment_status === "Failed") {
-      delete order.image
+      delete order.image;
     }
-    return order
-  })
+    return order;
+  });
 
   response.json({ orders });
 }

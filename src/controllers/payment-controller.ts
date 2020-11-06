@@ -67,7 +67,11 @@ export async function verifyPayment(
     payment = await payment.save()
     let order = <OrderType>await OrderModel
                         .findOne({'payment' : payment})
-                        .populate(populateArray)
+                        
+
+    order.orderStatus = payment.payment_status
+    order = await order.save()
+    order = await OrderModel.populate(order , populateArray)
 
     response.json({
         message : message , 
