@@ -1,0 +1,466 @@
+{
+    "info": {
+        "_postman_id": "bc6ad727-4cbe-4f27-b745-d949474a151f",
+        "name": "photopedia",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "user register",
+            "_postman_id": "ba0f54f9-1d27-4368-b9c5-c1e5352f5eaf",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\" : \"Ankit\" , \r\n    \"email\" : \"ankit@gmail.com\",\r\n    \"password\" : \"123456\"  , \r\n    \"repeat_password\" : \"123456\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": "localhost:3000/api/users"
+            },
+            "response": []
+        },
+        {
+            "name": "login",
+            "_postman_id": "884f6aa0-df55-46b0-a923-a1d864880fc3",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"email\" : \"patelvirendra62@gmail.com\" , \r\n    \"password\" : \"123456\"\r\n    \r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": "localhost:3000/api/users/login"
+            },
+            "response": []
+        },
+        {
+            "name": "update user",
+            "_postman_id": "62333193-89c8-4009-b2f0-b8d729272472",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjA0MTYwMDEwfQ.Rkvx03jTwzgQwn1iur2YwCJlv7LfazHo-vQaHWaG7G0"
+                    }
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"name\" : \"virendra patel\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": "localhost:3000/api/users"
+            },
+            "response": []
+        },
+        {
+            "name": "get pictures",
+            "_postman_id": "1c88879b-8b94-4ef7-b8bf-a8f5a714a5c9",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "localhost:3000/api/pictures"
+            },
+            "response": []
+        },
+        {
+            "name": "create picture",
+            "_postman_id": "b8a9e567-558f-4640-8a11-6614d3781fd2",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ1MTM5NDh9.g-DQWyUbMsZKLaaZNqAWJMF2jalrwqQWh_P7_Dfa4H8"
+                    }
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "highQualityImage",
+                            "type": "file",
+                            "src": "/C:/Users/Feel Free To Code/Downloads/images/large/1026-2400x1800.jpg"
+                        },
+                        {
+                            "key": "thumbnail",
+                            "type": "file",
+                            "src": "/C:/Users/Feel Free To Code/Downloads/images/small/1026-400x300.jpg"
+                        },
+                        {
+                            "key": "title",
+                            "value": "Sun Light And Train",
+                            "type": "text"
+                        },
+                        {
+                            "key": "price",
+                            "value": "199",
+                            "type": "text"
+                        },
+                        {
+                            "key": "discount",
+                            "value": "20",
+                            "type": "text"
+                        },
+                        {
+                            "key": "tags",
+                            "value": "animal",
+                            "type": "text"
+                        },
+                        {
+                            "key": "tags",
+                            "value": "dog",
+                            "type": "text"
+                        }
+                    ],
+                    "options": {
+                        "formdata": {}
+                    }
+                },
+                "url": "localhost:3000/api/pictures"
+            },
+            "response": []
+        },
+        {
+            "name": "thumbnail download",
+            "_postman_id": "d6e7939f-66f3-4d47-9366-ae1e62cf1855",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:3000/api/file/thumbnail/5f9e9bf73d47e650b003c372"
+            },
+            "response": []
+        },
+        {
+            "name": "update picture",
+            "_postman_id": "9e669ac2-6576-4325-84a9-52b2a294a945",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQzMzk0Njh9.3ZNUyNrmZctWX8Q8RXIsNRuW0MxNvSwcjARDsevfIA8"
+                    }
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"title\" : \"DG\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": "localhost:3000/api/pictures/5fa047156111e837d8537abd"
+            },
+            "response": []
+        },
+        {
+            "name": "update high quality image",
+            "_postman_id": "9065016e-ca56-4be8-a4ce-425e2025deac",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQzMzk0Njh9.3ZNUyNrmZctWX8Q8RXIsNRuW0MxNvSwcjARDsevfIA8"
+                    }
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "highQualityImage",
+                            "type": "file",
+                            "src": "/C:/Users/Feel Free To Code/Downloads/images/large/1026-2400x1800.jpg"
+                        }
+                    ],
+                    "options": {
+                        "formdata": {}
+                    }
+                },
+                "url": "localhost:3000/api/pictures/5fa047156111e837d8537abd/highqualityimage"
+            },
+            "response": []
+        },
+        {
+            "name": "update thumbnail ",
+            "_postman_id": "58f8d13d-4fe4-48ff-840d-27352086cd99",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQzMzk0Njh9.3ZNUyNrmZctWX8Q8RXIsNRuW0MxNvSwcjARDsevfIA8"
+                    }
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "highQualityImage",
+                            "type": "file",
+                            "src": "/C:/Users/Feel Free To Code/Downloads/images/large/1026-2400x1800.jpg"
+                        }
+                    ],
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": "localhost:3000/api/pictures/5fa047156111e837d8537abd/thumbnail"
+            },
+            "response": []
+        },
+        {
+            "name": "payment verification",
+            "_postman_id": "e1cad1c2-b908-4464-bc7b-d54f744d0e19",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmExN2E2MmZkZGM5ODFhOWMxMThlMTQiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjA0NDE4MjE5fQ.QJIXmHwlIcjCpRgrhCi5CjcCsvfYyuN9KLXkBlK1VA8"
+                    }
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"order_id\": \"order_Fwv9NIcE7goGna\",\r\n    \"payment_id\": \"pay_FwvAHUAFtVlDx5\",\r\n    \"razorpay_signature\": \"9d9d494031b2340b0c4e82cfb70e83206c7ca00c39a1659985ee72ce570c9ba4\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": "localhost:3000/api/payments/verify"
+            },
+            "response": []
+        },
+        {
+            "name": "create order",
+            "_postman_id": "9ca27fa7-1d55-40c7-abb3-7b9ae99f12bb",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmExN2E2MmZkZGM5ODFhOWMxMThlMTQiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjA0NDE4MjE5fQ.QJIXmHwlIcjCpRgrhCi5CjcCsvfYyuN9KLXkBlK1VA8"
+                    }
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"picture\" : \"5fa047156111e837d8537abd\" \r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": "localhost:3000/api/orders"
+            },
+            "response": []
+        },
+        {
+            "name": "user orders",
+            "_postman_id": "b19d0fcb-19f1-4f84-92b1-827d017b18e4",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ2NTU0NzJ9.194JsTiz1W9yjg_A7gMZRG_516mqstxl2O5LQioR-n0"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:3000/api/users/orders?status=success",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "users",
+                        "orders"
+                    ],
+                    "query": [
+                        {
+                            "key": "status",
+                            "value": "success"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "high quality image download",
+            "_postman_id": "46a70b7c-a05c-48c9-b485-f7a263abe75c",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:3000/api/file/highqualityimage/8aQFveuN5PfdHTCjycw5JA"
+            },
+            "response": []
+        },
+        {
+            "name": "get alll users",
+            "_postman_id": "dea772a9-911f-4047-8d52-c3aae1dfe42f",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ2ODQ2ODd9.3D8mVhAs_BAeznVURZQSEuMBhuQwiuxUT8IHESqKp0w"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "localhost:3000/api/users?pagesize=5&page=1&sortby=_id",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "api",
+                        "users"
+                    ],
+                    "query": [
+                        {
+                            "key": "pagesize",
+                            "value": "5"
+                        },
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "sortby",
+                            "value": "_id"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "is Admin",
+            "_postman_id": "1d2ff7df-6109-4501-9fdb-83c0ea7f05dd",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ2ODQ2ODd9.3D8mVhAs_BAeznVURZQSEuMBhuQwiuxUT8IHESqKp0w"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": "localhost:3000/api/users/isadmin"
+            },
+            "response": []
+        },
+        {
+            "name": "user profile - ",
+            "_postman_id": "1ad35200-1f6a-45a7-95cb-7f32bf99a2cf",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmExN2E2MmZkZGM5ODFhOWMxMThlMTQiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNjA0NzI1ODk5fQ.pggP3MBK-6-dzUC51PrppFt-vbmSFoyUDe1j7eyVI6k"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": "localhost:3000/api/users/me"
+            },
+            "response": []
+        },
+        {
+            "name": "get user - admin ",
+            "_postman_id": "8c52a9c8-40ee-485a-9147-3cba53550996",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ3MjczOTd9.CCSE_NxHsat2YPY83GnCmjlJiOfPdCnxk8HQo17DxEg"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": "localhost:3000/api/users/5fa17a62fddc981a9c118e14"
+            },
+            "response": []
+        },
+        {
+            "name": "get order by id - admin ",
+            "_postman_id": "37bb646d-5423-4703-bf3b-b2bd19093f7d",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ3Mjg0NzV9.fZNfP9veIv5Tteuy-MUisr2M0ibo5EXkXuY0Onf854s"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": "localhost:3000/api/users/orders/5fa512daac2bda2d00a87463"
+            },
+            "response": []
+        },
+        {
+            "name": "all order - admin ",
+            "_postman_id": "8f0e4e9d-ec84-4cdf-9ea1-0210b3b32f53",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ3Mjg0NzV9.fZNfP9veIv5Tteuy-MUisr2M0ibo5EXkXuY0Onf854s"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": "localhost:3000/api/orders"
+            },
+            "response": []
+        },
+        {
+            "name": "summary",
+            "_postman_id": "0bc77605-c6b0-46c3-959a-312bb00d14a6",
+            "request": {
+                "auth": {
+                    "type": "bearer",
+                    "bearer": {
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjlkNGQ0NTI0YzcwNzI3OGM3OTE5MzAiLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE2MDQ3Mjg0NzV9.fZNfP9veIv5Tteuy-MUisr2M0ibo5EXkXuY0Onf854s"
+                    }
+                },
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:3000/api/summary"
+            },
+            "response": []
+        }
+    ],
+    "protocolProfileBehavior": {}
+}
