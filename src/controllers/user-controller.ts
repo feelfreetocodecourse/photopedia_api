@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
-import { UserModel } from "../models/user";
+import { PictureModel , OrderModel ,PaymentModel , UserModel } from "../models";
+
 import passwordHash from "password-hash";
 import { UserType } from "../types/user-type";
 import jwt from "jsonwebtoken";
 import { TokenPayload } from "../types/token-payload";
-import { OrderModel } from "../models/order";
 import { isValidObjectId } from "mongoose";
-import { nextTick } from "process";
 const { JWT_SECRET } = process.env;
 
 export async function getUsers(request: Request, response: Response) {

@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { UserModel } from "../models/user";
-import { OrderModel } from "../models/order";
 const { HOST } = process.env;
+import { PictureModel , OrderModel ,PaymentModel , UserModel } from "../models";
 
 async function getSaleSummary() {
   const summary = await OrderModel.aggregate()

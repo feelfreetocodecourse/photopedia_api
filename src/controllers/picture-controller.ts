@@ -1,8 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import joi, { valid } from "joi";
+import { PictureModel , OrderModel ,PaymentModel , UserModel } from "../models";
+
 import { PictureType } from "../types/picture-type";
 import fs from "fs";
-import { PictureModel, validatePictureBody } from "../models/picture";
+import { validatePictureBody } from "../models/picture";
 import { isValidObjectId } from "mongoose";
 export async function getPictures(
   request: Request,

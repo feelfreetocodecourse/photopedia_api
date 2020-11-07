@@ -30,6 +30,8 @@
     "multer": "^1.4.2",
     "password-hash": "^1.2.2",
     "razorpay": "^2.0.6",
-    "short-uuid": "^4.1.0"
+    "short-uuid": "^4.1.0",
+    "winston": "^2.0.0",
+    "winston-mongodb": "^3.0.0"
   }
 }

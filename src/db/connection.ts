@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+const {DB_URL} = process.env
 export function createConnection() {
   mongoose
-    .connect("mongodb://localhost:27017/photopedia", {
+    .connect(<string>DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
