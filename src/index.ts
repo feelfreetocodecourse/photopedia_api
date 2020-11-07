@@ -10,6 +10,7 @@ import { paymentRouter } from './routers/payment-router';
 import { pictureRouter } from "./routers/picture-router";
 import { userRouter } from "./routers/user-router";
 import morgan from 'morgan'
+import { summaryRouter } from './routers/summary-router';
 
 const app = express();
 app.use(morgan("dev"))
@@ -38,6 +39,7 @@ apiRouter.use("/pictures" , pictureRouter)
 apiRouter.use("/orders" , orderRouter)
 apiRouter.use('/payments' , paymentRouter)
 apiRouter.use("/file" , fileDownloadRouter)
+apiRouter.use("/summary" , summaryRouter)
 
 app.use(errorHandler)
 
