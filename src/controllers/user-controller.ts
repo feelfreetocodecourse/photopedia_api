@@ -17,13 +17,15 @@ export async function getUsers(request: Request, response: Response) {
     : 1;
   const skip = (page - 1) * pagesize;
 
-  const users = await UserModel.find().skip(skip).limit(pagesize);
+  // sort -email-asc | email->asc
+
+  const users = await UserModel.find().skip(skip).limit(pagesize)
   const count = users.length;
   const totalUsers = await UserModel.find().countDocuments();
   response.json({
     users,
     count,
-    page,
+    page,         
     pagesize,
     totalUsers,
   });
