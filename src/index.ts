@@ -1,7 +1,18 @@
 import dotenv from 'dotenv'
 dotenv.config()
-import express, { Request, Response } from "express";
-import { thumbnailDownload } from "./controllers/file-download-controller";
+
+process.on('uncaughtException' , (er)=>{
+  console.log("uncaughtException");
+})
+process.on('unhandledRejection' , (er)=>{
+  console.log("unhandledRejection");
+})
+
+Promise.reject().then(r=>{})
+throw new Error()
+
+
+import express from "express";
 import { createConnection } from "./db/connection";
 import { errorHandler } from "./middlewares/error-middleware";
 import { fileDownloadRouter } from "./routers/file-download-router";

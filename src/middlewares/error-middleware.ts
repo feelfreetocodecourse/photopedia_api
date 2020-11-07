@@ -6,5 +6,5 @@ export function errorHandler(err : Error , req : Request , res : Response , next
         res.status(500)
     }
     
-    res.json({message : err.message})
+    res.json({message : err.message || err })
 }
