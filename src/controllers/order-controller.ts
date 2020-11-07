@@ -10,6 +10,7 @@ import { PaymentType } from "../types/payment-type";
 import { PaymentModel } from "../models/payment";
 import { OrderModel } from "../models/order";
 import { OrderType } from "../types/order-type";
+import { isValidObjectId } from "mongoose";
 const { KEY_ID, KEY_SECRET } = process.env;
 var instance = new Razorpay({
   key_id: KEY_ID,
@@ -31,15 +32,15 @@ export async function createOrder(
   console.log({ user: payload._id });
   const user = <UserType>await UserModel.findById(payload._id);
 
-  const count =await OrderModel.find({
-    user : user, 
-    picture : picture, 
-    orderStatus : "Success"
-  }).countDocuments()
+  const count = await OrderModel.find({
+    user: user,
+    picture: picture,
+    orderStatus: "Success",
+  }).countDocuments();
 
-  if(count>0){
-    response.status(400)
-    return next(new Error("user already paid for this picture")) 
+  if (count > 0) {
+    response.status(400);
+    return next(new Error("user already paid for this picture"));
   }
 
   const mrp = +picture.price;
@@ -62,8 +63,8 @@ export async function createOrder(
     });
   } catch (error) {
     console.log(error);
-    response.status(500)
-    return response.send("Razorpay Error")
+    response.status(500);
+    return response.send("Razorpay Error");
   }
 
   console.log(razorPayOrderObject);
@@ -85,3 +86,68 @@ export async function createOrder(
     order,
   });
 }
+
+export async function getOrder(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  const orderid = request.params.orderid;
+
+  if (!isValidObjectId(orderid)) {
+    response.status(400);
+    return next(new Error("Invalid Order id"));
+  }
+
+  const order = await OrderModel.findById(orderid);
+
+  response.status(404)
+
+  return (order)?
+    response.status(200).json({order}) : next(new Error("Not found"))
+}
+
+export async function getOrders(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+
+  const filter : any  = {}
+  const sortby = request.query.sortby || "-created_at"
+
+  const pagesize = request.query.pagesize
+    ? Number.parseInt(request.query.pagesize.toString())
+    : 2;
+  const page: number = request.query.page
+    ? Number.parseInt(request.query.page.toString())
+    : 1;
+  const skip = (page - 1) * pagesize;
+
+  const userid = request.query.user
+  if(userid){
+    filter.user = userid
+  }
+  const status = request.query.status
+  if(status){
+    filter.orderStatus = new RegExp(<string>status , 'i')
+  }
+  const orders = await OrderModel.find(filter).populate([
+    {path : 'user'}, 
+    {path : 'payment'}, 
+    {path : 'picture'}, 
+  ]).skip(skip).limit(pagesize).sort(sortby)
+
+  const totalOrders = await OrderModel.find().countDocuments()
+
+  // underscore // lodash
+  response.json({
+    orders, 
+    count : orders.length , 
+    pagesize : pagesize , 
+    page : page , 
+    totalOrders
+  })
+
+}
+

@@ -23,7 +23,10 @@ const orderSchema = new Schema(
        transform : (doc , order)=>{
          let key = order.urlKey
          delete order.urlKey
-         order.image = `${HOST}/api/file/highqualityimage/${key}`
+         if(order.orderStatus == "Success"){
+          order.image = `${HOST}/api/file/highqualityimage/${key}`
+         }
+         
           return order
        }
      }

@@ -6,6 +6,8 @@ import { UserType } from "../types/user-type";
 import jwt from "jsonwebtoken";
 import { TokenPayload } from "../types/token-payload";
 import { OrderModel } from "../models/order";
+import { isValidObjectId } from "mongoose";
+import { nextTick } from "process";
 const { JWT_SECRET } = process.env;
 
 export async function getUsers(request: Request, response: Response) {
@@ -16,10 +18,9 @@ export async function getUsers(request: Request, response: Response) {
     ? Number.parseInt(request.query.page.toString())
     : 1;
   const skip = (page - 1) * pagesize;
+  const sortBy = (request.query.sortby) ? (request.query.sortby) : 'name' 
 
-  // sort -email-asc | email->asc
-
-  const users = await UserModel.find().skip(skip).limit(pagesize)
+  const users = await UserModel.find().skip(skip).limit(pagesize).sort(sortBy)
   const count = users.length;
   const totalUsers = await UserModel.find().countDocuments();
   response.json({
@@ -28,6 +29,24 @@ export async function getUsers(request: Request, response: Response) {
     page,         
     pagesize,
     totalUsers,
+  });
+}
+export async function getUser(request: Request, response: Response , next : NextFunction) {
+  const _id = request.params.id
+
+  if(!isValidObjectId(_id)){
+    response.status(400)
+    return next(new Error("user id is not valid"))
+  }
+  const user = await UserModel.findById(_id)
+
+  if(!user){
+    response.status(404)
+    return next(new Error("user not found"))
+  }
+  response.json({
+    user
+    
   });
 }
 export async function getUserOrders(request: Request, response: Response) {
@@ -60,6 +79,28 @@ export async function getUserOrders(request: Request, response: Response) {
   });
 
   response.json({ orders });
+}
+
+
+export async function getUserOrder(request: Request, response: Response , next : NextFunction) {
+  const payload = <TokenPayload>(<any>request).payload;
+  const user_id = payload._id;
+  const orderid = request.params.orderid;
+
+  let order = await OrderModel.findOne({
+    user : new UserModel({_id : user_id}), 
+    _id : orderid
+  }).populate([
+    { path: "picture" },
+    { path: "payment" },
+  ]);
+
+  if(!order){
+    response.status(404)
+   return next(new Error("order not found"))
+  }
+
+  response.json({ order });
 }
 
 export async function updateProfile(
@@ -170,4 +211,38 @@ export async function loginUser(
 
   response.status(400);
   return next("email or password incorrect");
+}
+export async function isAdmin(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  
+  const payload = <TokenPayload>(<any>request).payload;
+  const isAdmin = payload.isAdmin;
+
+  response.json({
+    isAdmin : isAdmin
+  })
+
+}
+
+
+export async function getProfile(
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
+  
+  const payload = <TokenPayload>(<any>request).payload;
+  const _id = payload._id;
+  const user = await UserModel.findById(_id)
+
+  if(!user){
+    return next(new Error("not Found"))
+  }
+  response.json({
+    user
+  })
+
 }
