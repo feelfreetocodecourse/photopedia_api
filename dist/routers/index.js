@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.orderRouter = exports.fileDownloadRouter = exports.summaryRouter = exports.pictureRouter = exports.userRouter = exports.paymentRouter = void 0;
+var file_download_router_1 = require("./file-download-router");
+Object.defineProperty(exports, "fileDownloadRouter", { enumerable: true, get: function () { return file_download_router_1.fileDownloadRouter; } });
+var order_router_1 = require("./order-router");
+Object.defineProperty(exports, "orderRouter", { enumerable: true, get: function () { return order_router_1.orderRouter; } });
+var payment_router_1 = require("./payment-router");
+Object.defineProperty(exports, "paymentRouter", { enumerable: true, get: function () { return payment_router_1.paymentRouter; } });
+var picture_router_1 = require("./picture-router");
+Object.defineProperty(exports, "pictureRouter", { enumerable: true, get: function () { return picture_router_1.pictureRouter; } });
+var summary_router_1 = require("./summary-router");
+Object.defineProperty(exports, "summaryRouter", { enumerable: true, get: function () { return summary_router_1.summaryRouter; } });
+var user_router_1 = require("./user-router");
+Object.defineProperty(exports, "userRouter", { enumerable: true, get: function () { return user_router_1.userRouter; } });
