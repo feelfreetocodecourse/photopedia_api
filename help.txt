@@ -1,0 +1,10 @@
+cd apps/
+
+export PORT=3000
+export HOST="http://65.0.112.84:3000"
+export JWT_SECRET="PHOTO@156"
+export KEY_ID="rzp_test_KM8H0dXpwlNMmB"
+export KEY_SECRET="AfXfJQmoUx7khv9LfrMtloRw"
+export DB_URL="mongodb+srv://user:6qmjygIkBad0F6P8@cluster0.qjy7y.mongodb.net/my_database?retryWrites=true&w=majority"
+
+forever start dist/index.js

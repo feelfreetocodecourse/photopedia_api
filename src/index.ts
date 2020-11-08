@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import { winston } from "./utils/logger";
 process.on("uncaughtException", (er) => {
   winston.error("uncaughtException", er);
@@ -20,8 +21,12 @@ import {
   userRouter,
 } from "./routers";
 import morgan from "morgan";
+import helmet from 'helmet'
+import cors from 'cors'
 
 const app = express();
+app.use(helmet())
+app.use(cors())
 app.use(morgan("dev"));
 app.use(express.urlencoded());
 app.use(express.json());
